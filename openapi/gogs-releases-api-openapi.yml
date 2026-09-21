@@ -1,0 +1,93 @@
+openapi: 3.2.0
+info:
+  title: Gogs Releases API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Releases
+  description: List repository releases
+paths:
+  /repos/{owner}/{repo}/releases:
+    get:
+      operationId: listReleases
+      summary: List releases
+      tags:
+      - Releases
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Release'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+components:
+  schemas:
+    Release:
+      type: object
+      properties:
+        id:
+          type: integer
+        tag_name:
+          type: string
+        target_commitish:
+          type: string
+        name:
+          type: string
+        body:
+          type: string
+        draft:
+          type: boolean
+        prerelease:
+          type: boolean
+        author:
+          $ref: '#/components/schemas/User'
+        created_at:
+          type: string
+          format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

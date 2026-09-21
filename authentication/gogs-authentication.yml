@@ -1,0 +1,22 @@
+generated: '2026-09-21'
+method: derived
+source: openapi/gogs-openapi.json
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/gogs-openapi.json
+- name: AccessToken
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'
+  sources:
+  - openapi/gogs-openapi.json

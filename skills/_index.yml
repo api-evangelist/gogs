@@ -1,0 +1,32 @@
+generated: '2026-09-21'
+method: generated
+generator: extract-docs-artifacts.py skills (local)
+source: openapi/gogs-openapi.json
+skills:
+- file: skills/gogs-create-issue-with-labels.md
+  name: gogs-create-issue-with-labels
+  api: openapi/gogs-openapi.json
+  operations:
+  - createIssue
+  - addIssueLabels
+- file: skills/gogs-manage-follow.md
+  name: gogs-manage-follow
+  api: openapi/gogs-openapi.json
+  operations:
+  - checkFollowing
+  - followUser
+  - unfollowUser
+- file: skills/gogs-create-and-list-orgs.md
+  name: gogs-create-and-list-orgs
+  api: openapi/gogs-openapi.json
+  operations:
+  - createMyOrg
+  - listMyOrgs
+- file: skills/gogs-webhooks-setup.md
+  name: gogs-webhooks-setup
+  api: openapi/gogs-openapi.json
+  operations:
+  - listHooks
+  - createHook
+  - editHook
+  - deleteHook

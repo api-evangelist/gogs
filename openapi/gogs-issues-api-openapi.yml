@@ -1,0 +1,1130 @@
+openapi: 3.2.0
+info:
+  title: Gogs Issues API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Issues
+  description: Manage issues, comments, labels, and milestones
+paths:
+  /repos/{owner}/{repo}/issues:
+    get:
+      operationId: listIssues
+      summary: List issues for a repository
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      description: This endpoint may also return pull requests. If an issue is a pull request, the object will include a pull_request key.
+    post:
+      operationId: createIssue
+      summary: Create an issue
+      tags:
+      - Issues
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                assignee:
+                  type: string
+                milestone:
+                  type: integer
+                labels:
+                  type: array
+                  items:
+                    type: integer
+                closed:
+                  type: boolean
+                  default: false
+              required:
+              - title
+  /repos/{owner}/{repo}/issues/{index}:
+    get:
+      operationId: getIssue
+      summary: Get a single issue
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+    patch:
+      operationId: editIssue
+      summary: Edit an issue
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                assignee:
+                  type: string
+                milestone:
+                  type: integer
+                state:
+                  type: string
+                  enum:
+                  - open
+                  - closed
+  /repos/{owner}/{repo}/issues/{index}/comments:
+    get:
+      operationId: listIssueComments
+      summary: List comments on an issue
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      - name: since
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Only comments updated at or after this time (RFC 3339)
+    post:
+      operationId: createComment
+      summary: Create a comment
+      tags:
+      - Issues
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+              - body
+  /repos/{owner}/{repo}/issues/comments:
+    get:
+      operationId: listRepoComments
+      summary: List comments in a repository
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: since
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Only comments updated at or after this time (RFC 3339)
+  /repos/{owner}/{repo}/issues/{index}/comments/{id}:
+    patch:
+      operationId: editComment
+      summary: Edit a comment
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Comment ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+              required:
+              - body
+    delete:
+      operationId: deleteComment
+      summary: Delete a comment
+      tags:
+      - Issues
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Comment ID
+  /repos/{owner}/{repo}/labels:
+    get:
+      operationId: listLabels
+      summary: List all labels for a repository
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+    post:
+      operationId: createLabel
+      summary: Create a label
+      tags:
+      - Issues
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                color:
+                  type: string
+                  description: 'Hex color code with leading #'
+              required:
+              - name
+              - color
+  /repos/{owner}/{repo}/labels/{id}:
+    get:
+      operationId: getLabel
+      summary: Get a single label
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Label ID
+    patch:
+      operationId: updateLabel
+      summary: Update a label
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Label ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                color:
+                  type: string
+    delete:
+      operationId: deleteLabel
+      summary: Delete a label
+      tags:
+      - Issues
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Label ID
+  /repos/{owner}/{repo}/issues/{index}/labels:
+    get:
+      operationId: listIssueLabels
+      summary: List labels on an issue
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+    post:
+      operationId: addIssueLabels
+      summary: Add labels to an issue
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                labels:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - labels
+    put:
+      operationId: replaceIssueLabels
+      summary: Replace all labels for an issue
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                labels:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - labels
+    delete:
+      operationId: removeAllIssueLabels
+      summary: Remove all labels from an issue
+      tags:
+      - Issues
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+  /repos/{owner}/{repo}/issues/{index}/labels/{id}:
+    delete:
+      operationId: removeIssueLabel
+      summary: Remove a label from an issue
+      tags:
+      - Issues
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: index
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Issue index
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Label ID
+  /repos/{owner}/{repo}/milestones:
+    get:
+      operationId: listMilestones
+      summary: List milestones for a repository
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Milestone'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+    post:
+      operationId: createMilestone
+      summary: Create a milestone
+      tags:
+      - Issues
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                due_on:
+                  type: string
+                  format: date-time
+              required:
+              - title
+  /repos/{owner}/{repo}/milestones/{id}:
+    get:
+      operationId: getMilestone
+      summary: Get a single milestone
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Milestone ID
+    patch:
+      operationId: editMilestone
+      summary: Edit a milestone
+      tags:
+      - Issues
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Milestone ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                due_on:
+                  type: string
+                  format: date-time
+                state:
+                  type: string
+                  enum:
+                  - open
+                  - closed
+    delete:
+      operationId: deleteMilestone
+      summary: Delete a milestone
+      tags:
+      - Issues
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Milestone ID
+      description: Only users with write access to a repository can delete a milestone.
+  /user/issues:
+    get:
+      operationId: listUserIssues
+      summary: List issues assigned to the authenticated user
+      description: Lists issues across all repositories assigned to the authenticated user. Also available at `GET /issues`.
+      tags:
+      - Issues
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Page number
+      - name: state
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - open
+          - closed
+          default: open
+        description: Filter by state
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+components:
+  schemas:
+    Milestone:
+      type: object
+      properties:
+        id:
+          type: integer
+        state:
+          type: string
+          enum:
+          - open
+          - closed
+        title:
+          type: string
+        description:
+          type: string
+        open_issues:
+          type: integer
+        closed_issues:
+          type: integer
+        closed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        due_on:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+    Label:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        color:
+          type: string
+        url:
+          type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        html_url:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Issue:
+      type: object
+      properties:
+        id:
+          type: integer
+        number:
+          type: integer
+        state:
+          type: string
+          enum:
+          - open
+          - closed
+        title:
+          type: string
+        body:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        assignee:
+          $ref: '#/components/schemas/User'
+        milestone:
+          $ref: '#/components/schemas/Milestone'
+        comments:
+          type: integer
+        pull_request:
+          type:
+          - object
+          - 'null'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

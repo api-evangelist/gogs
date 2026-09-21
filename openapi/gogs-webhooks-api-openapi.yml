@@ -1,0 +1,239 @@
+openapi: 3.2.0
+info:
+  title: Gogs Webhooks API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Webhooks
+  description: Create, edit, and delete repository webhooks
+paths:
+  /repos/{owner}/{repo}/hooks:
+    get:
+      operationId: listHooks
+      summary: List hooks
+      tags:
+      - Webhooks
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hook'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+    post:
+      operationId: createHook
+      summary: Create a hook
+      tags:
+      - Webhooks
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hook'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - gogs
+                  - slack
+                  - discord
+                  - dingtalk
+                config:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                    content_type:
+                      type: string
+                      enum:
+                      - json
+                      - form
+                    secret:
+                      type: string
+                  required:
+                  - url
+                  - content_type
+                events:
+                  type: array
+                  items:
+                    type: string
+                  default:
+                  - push
+                active:
+                  type: boolean
+                  default: false
+              required:
+              - type
+              - config
+  /repos/{owner}/{repo}/hooks/{id}:
+    patch:
+      operationId: editHook
+      summary: Edit a hook
+      tags:
+      - Webhooks
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hook'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Hook ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                    content_type:
+                      type: string
+                    secret:
+                      type: string
+                events:
+                  type: array
+                  items:
+                    type: string
+                active:
+                  type: boolean
+              required:
+              - config
+    delete:
+      operationId: deleteHook
+      summary: Delete a hook
+      tags:
+      - Webhooks
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Hook ID
+components:
+  schemas:
+    Hook:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum:
+          - gogs
+          - slack
+          - discord
+          - dingtalk
+        events:
+          type: array
+          items:
+            type: string
+        active:
+          type: boolean
+        config:
+          type: object
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

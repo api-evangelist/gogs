@@ -1,0 +1,173 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/gogs-openapi.json
+vocabulary:
+  name: Gogs Domain Vocabulary
+  description: 'Terms declared by Gogs''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions. Derived,
+    not authored.'
+  version: '2026-09-21'
+  terms:
+  - term: Repositories
+    definition: Create, search, and manage repositories, branches, commits, and contents
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Collaborators and Deploy Keys
+    definition: Manage repository collaborators and deploy keys
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Releases
+    definition: List repository releases
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Webhooks
+    definition: Create, edit, and delete repository webhooks
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Issues
+    definition: Manage issues, comments, labels, and milestones
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Users
+    definition: Search users, manage access tokens, emails, followers, and public keys
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Organizations
+    definition: Manage organizations, members, and teams
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Administration
+    definition: Site administration endpoints (requires admin privileges)
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: Miscellaneous
+    definition: Markdown rendering and Git data endpoints
+    tags:
+    - Resource Group
+    source: openapi/gogs-openapi.json
+  - term: User
+    definition: 'Object declared by the contract with fields: id, username, login, full_name, email, avatar_url.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/User
+  - term: Collaborator
+    definition: A repository collaborator with permission information
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Collaborator
+  - term: Repository
+    definition: 'Object declared by the contract with fields: id, owner, name, full_name, description, private, fork, parent, empty, mirror, size,
+      html_url. (11 more)'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Repository
+  - term: Branch
+    definition: 'Object declared by the contract with fields: name, commit.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Branch
+  - term: Commit
+    definition: 'Object declared by the contract with fields: url, sha, html_url, commit, author, committer, parents.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Commit
+  - term: Issue
+    definition: 'Object declared by the contract with fields: id, number, state, title, body, user, labels, assignee, milestone, comments, pull_request,
+      created_at. (1 more)'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Issue
+  - term: Comment
+    definition: 'Object declared by the contract with fields: id, html_url, user, body, created_at, updated_at.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Comment
+  - term: Label
+    definition: 'Object declared by the contract with fields: id, name, color, url.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Label
+  - term: Milestone
+    definition: 'Object declared by the contract with fields: id, state, title, description, open_issues, closed_issues, closed_at, due_on.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Milestone
+  - term: Hook
+    definition: 'Object declared by the contract with fields: id, type, events, active, config, created_at, updated_at.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Hook
+  - term: Release
+    definition: 'Object declared by the contract with fields: id, tag_name, target_commitish, name, body, draft, prerelease, author, created_at.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Release
+  - term: DeployKey
+    definition: 'Object declared by the contract with fields: id, key, url, title, created_at, read_only.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/DeployKey
+  - term: PublicKey
+    definition: 'Object declared by the contract with fields: id, key, url, title, created_at.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/PublicKey
+  - term: AccessToken
+    definition: 'Object declared by the contract with fields: name, sha1.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/AccessToken
+  - term: Email
+    definition: 'Object declared by the contract with fields: email, verified, primary.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Email
+  - term: Organization
+    definition: 'Object declared by the contract with fields: id, username, full_name, avatar_url, description, website, location.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Organization
+  - term: Team
+    definition: 'Object declared by the contract with fields: id, name, description, permission.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Team
+  - term: Content
+    definition: 'Object declared by the contract with fields: type, encoding, size, name, path, content, sha, url, git_url, html_url, download_url,
+      _links.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Content
+  - term: GitTree
+    definition: 'Object declared by the contract with fields: sha, url, tree.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/GitTree
+  - term: Error
+    definition: 'Object declared by the contract with fields: message, url.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Error
+  - term: GitBlob
+    definition: 'Object declared by the contract with fields: content, encoding, url, sha, size.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/GitBlob
+  - term: Tag
+    definition: 'Object declared by the contract with fields: name, commit.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/Tag
+  - term: EditorConfigDefinition
+    definition: 'Object declared by the contract with fields: charset, indent_style, indent_size, end_of_line.'
+    tags:
+    - Object
+    source: openapi/gogs-openapi.json#/components/schemas/EditorConfigDefinition

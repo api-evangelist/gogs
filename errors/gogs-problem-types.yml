@@ -1,0 +1,25 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/gogs-openapi.json
+format: custom
+envelope:
+  media_type: null
+  schema: null
+coverage:
+  operations: 104
+  statuses_declared: 2
+problems:
+- status: 404
+  title: Not Found
+  description: Resource not found.
+  operations: 85
+  media_types: []
+  schema: null
+- status: 422
+  title: Unprocessable Content
+  description: Validation error.
+  operations: 38
+  media_types: []
+  schema: null

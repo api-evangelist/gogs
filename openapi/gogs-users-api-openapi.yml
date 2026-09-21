@@ -1,0 +1,535 @@
+openapi: 3.2.0
+info:
+  title: Gogs Users API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Users
+  description: Search users, manage access tokens, emails, followers, and public keys
+paths:
+  /users/search:
+    get:
+      operationId: searchUsers
+      summary: Search for users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  ok:
+                    type: boolean
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Keyword of username
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Max results
+      description: Requests without authentication will return an empty email field for anti-spam purposes.
+  /users/{username}:
+    get:
+      operationId: getUser
+      summary: Get a single user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+  /user:
+    get:
+      operationId: getAuthenticatedUser
+      summary: Get the authenticated user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{username}/tokens:
+    get:
+      operationId: listAccessTokens
+      summary: List access tokens
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccessToken'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      security:
+      - BasicAuth: []
+      description: Requires basic authentication.
+    post:
+      operationId: createAccessToken
+      summary: Create an access token
+      tags:
+      - Users
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      security:
+      - BasicAuth: []
+      description: Requires basic authentication.
+  /user/emails:
+    get:
+      operationId: listEmails
+      summary: List email addresses
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Email'
+    post:
+      operationId: addEmails
+      summary: Add email addresses
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Email'
+        '422':
+          description: Validation error.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+              required:
+              - emails
+    delete:
+      operationId: deleteEmails
+      summary: Delete email addresses
+      tags:
+      - Users
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emails:
+                  type: array
+                  items:
+                    type: string
+                    format: email
+              required:
+              - emails
+  /users/{username}/followers:
+    get:
+      operationId: listUserFollowers
+      summary: List followers of a user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+  /user/followers:
+    get:
+      operationId: listMyFollowers
+      summary: List your followers
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /users/{username}/following:
+    get:
+      operationId: listUserFollowing
+      summary: List users followed by a user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+  /user/following:
+    get:
+      operationId: listMyFollowing
+      summary: List who you are following
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /user/following/{target}:
+    get:
+      operationId: checkFollowing
+      summary: Check if you follow a user
+      tags:
+      - Users
+      responses:
+        '204':
+          description: The user is being followed.
+        '404':
+          description: Not following
+      parameters:
+      - name: target
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Target username
+    put:
+      operationId: followUser
+      summary: Follow a user
+      tags:
+      - Users
+      responses:
+        '204':
+          description: Successfully followed the user.
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: target
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Target username
+    delete:
+      operationId: unfollowUser
+      summary: Unfollow a user
+      tags:
+      - Users
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: target
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Target username
+  /users/{username}/following/{target}:
+    get:
+      operationId: checkUserFollowing
+      summary: Check if a user follows another
+      tags:
+      - Users
+      responses:
+        '204':
+          description: The user is being followed.
+        '404':
+          description: Not following
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      - name: target
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Target username
+  /users/{username}/keys:
+    get:
+      operationId: listUserKeys
+      summary: List public keys for a user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicKey'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+  /user/keys/{id}:
+    get:
+      operationId: getPublicKey
+      summary: Get a single public key
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicKey'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Key ID
+    delete:
+      operationId: deletePublicKey
+      summary: Delete a public key
+      tags:
+      - Users
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Key ID
+  /user/keys:
+    get:
+      operationId: listMyKeys
+      summary: List your public keys
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicKey'
+    post:
+      operationId: createPublicKey
+      summary: Create a public key
+      tags:
+      - Users
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicKey'
+        '422':
+          description: Validation error.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                key:
+                  type: string
+              required:
+              - title
+              - key
+components:
+  schemas:
+    PublicKey:
+      type: object
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        url:
+          type: string
+        title:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    Email:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        verified:
+          type: boolean
+        primary:
+          type: boolean
+    AccessToken:
+      type: object
+      properties:
+        name:
+          type: string
+        sha1:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

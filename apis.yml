@@ -1,23 +1,179 @@
 aid: gogs
+
 name: Gogs
-description: 'Gogs is a company surfaced via the API Evangelist harvest backlog (source: version-control)
-  and added to the network as a stub for full-pipeline profiling.'
+
+image: https://unknwon.mintlify.app/mintlify-assets/_next/image?url=%2F_mintlify%2Fapi%2Fog%3Fdivision%3DGetting%2Bstarted%26title%3DIntroduction%26description%3DThe%2Bpainless%2Bway%2Bto%2Bhost%2Byour%2Bown%2BGit%2Bservice%26theme%3Dae1e6af0f2409a2f7f17f292&w=1200&q=100
+
+description: Gogs is a painless self‑hosted Git service that lets you run your own Git server with a simple, lightweight web UI. It supports repository
+  creation, issue tracking, pull requests, webhooks, and integrates with LDAP and OAuth providers. Gogs is written in Go, easy to install on Linux,
+  macOS, and Windows, and is suitable for teams that need a fast, low‑maintenance version‑control platform they can host themselves.
+
 url: https://raw.githubusercontent.com/api-evangelist/gogs/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:version-control
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-21 (modular-v1; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-09-21'
+
 modified: '2026-09-21'
+
 tags:
 - Company
-apis: []
+- Git
+- Self-hosted
+- Open-source
+- Go
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/gogs-agentic-access.yml
+- type: Spectral
+  url: rules/gogs-rules.yml
+- type: JSONLD
+  url: json-ld/gogs-context.jsonld
+- type: Vocabulary
+  url: vocabulary/gogs-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/gogs-data-model.yml
+- type: ErrorCatalog
+  url: errors/gogs-problem-types.yml
+- type: Conformance
+  url: conformance/gogs-conformance.yml
+- type: LLMsTxt
+  url: llms/gogs-llms.txt
+- type: AgentCard
+  url: a2a/gogs-a2a.yml
+- type: WellKnown
+  url: well-known/gogs-well-known.yml
+- type: Webhooks
+  url: https://gogs.io/advancing/webhooks
+- type: Authentication
+  url: authentication/gogs-authentication.yml
+- type: DomainSecurity
+  url: security/gogs-domain-security.yml
 - type: Website
   url: https://gogs.io/
+- type: Documentation
+  url: https://gogs.io/llms.txt
+- type: APIReference
+  url: https://gogs.io/api-reference/introduction
+- type: GettingStarted
+  url: https://gogs.io/getting-started/introduction
+- type: Support
+  url: https://gogs.io/advancing/authentication
+
+apis:
+- name: Gogs API
+  description: RESTful API for interacting with Gogs instances, similar to GitHub REST API v3.
+  humanURL: https://gogs.io/api-reference/introduction
+  baseURL: null
+  aid: gogs:gogs-api
+- aid: gogs:gogs-administration-api
+  name: Gogs Administration API
+  description: Site administration endpoints (requires admin privileges)
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Administration
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-administration-api-openapi.yml
+- aid: gogs:gogs-collaborators-and-deploy-keys-api
+  name: Gogs Collaborators and Deploy Keys API
+  description: Manage repository collaborators and deploy keys
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Collaborators and Deploy Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-collaborators-and-deploy-keys-api-openapi.yml
+- aid: gogs:gogs-issues-api
+  name: Gogs Issues API
+  description: Manage issues, comments, labels, and milestones
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Issues
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-issues-api-openapi.yml
+- aid: gogs:gogs-miscellaneous-api
+  name: Gogs Miscellaneous API
+  description: Markdown rendering and Git data endpoints
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Miscellaneous
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-miscellaneous-api-openapi.yml
+- aid: gogs:gogs-organizations-api
+  name: Gogs Organizations API
+  description: Manage organizations, members, and teams
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-organizations-api-openapi.yml
+- aid: gogs:gogs-releases-api
+  name: Gogs Releases API
+  description: List repository releases
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Releases
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-releases-api-openapi.yml
+- aid: gogs:gogs-repositories-api
+  name: Gogs Repositories API
+  description: Create, search, and manage repositories, branches, commits, and contents
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Repositories
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-repositories-api-openapi.yml
+- aid: gogs:gogs-users-api
+  name: Gogs Users API
+  description: Search users, manage access tokens, emails, followers, and public keys
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-users-api-openapi.yml
+- aid: gogs:gogs-webhooks-api
+  name: Gogs Webhooks API
+  description: Create, edit, and delete repository webhooks
+  humanURL: https://gogs.io/api-reference/introduction
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/gogs-webhooks-api-openapi.yml
+x-coverage:
+  state: unreadable
+  reason: no-machine-readable-spec
+  detail: OpenAPI spec points to https://gogs.example.com/api/v1, a domain not owned by Gogs, so ownership cannot be verified.
+  evidence:
+  - url: https://gogs.io/api-reference/openapi.json
+    status: 200
+  checked: 2026-09-21
+x-enrichment:
+  date: '2026-09-21'
+  status: enriched
+  artifacts_added: 21
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local

@@ -1,0 +1,214 @@
+openapi: 3.2.0
+info:
+  title: Gogs Organizations API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Organizations
+  description: Manage organizations, members, and teams
+paths:
+  /user/orgs:
+    get:
+      operationId: listMyOrgs
+      summary: List your organizations
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+    post:
+      operationId: createMyOrg
+      summary: Create an organization
+      description: Creates an organization for the authenticated user.
+      tags:
+      - Organizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                full_name:
+                  type: string
+                description:
+                  type: string
+                website:
+                  type: string
+                location:
+                  type: string
+              required:
+              - username
+      responses:
+        '201':
+          description: Organization created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '422':
+          description: Organization name already exists or is not allowed.
+  /users/{username}/orgs:
+    get:
+      operationId: listUserOrgs
+      summary: List user organizations
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+  /orgs/{orgname}:
+    get:
+      operationId: getOrg
+      summary: Get an organization
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: orgname
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Organization name
+    patch:
+      operationId: editOrg
+      summary: Edit an organization
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: orgname
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Organization name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                description:
+                  type: string
+                website:
+                  type: string
+                location:
+                  type: string
+  /orgs/{orgname}/teams:
+    get:
+      operationId: listOrgTeams
+      summary: List teams of an organization
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: orgname
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Organization name
+components:
+  schemas:
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        full_name:
+          type: string
+        avatar_url:
+          type: string
+        description:
+          type: string
+        website:
+          type: string
+        location:
+          type: string
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        permission:
+          type: string
+          enum:
+          - read
+          - write
+          - admin
+          - owner
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

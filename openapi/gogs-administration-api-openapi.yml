@@ -1,0 +1,572 @@
+openapi: 3.2.0
+info:
+  title: Gogs Administration API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Administration
+  description: Site administration endpoints (requires admin privileges)
+paths:
+  /admin/users:
+    post:
+      operationId: adminCreateUser
+      summary: Create a new user
+      tags:
+      - Administration
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation error.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_id:
+                  type: integer
+                login_name:
+                  type: string
+                username:
+                  type: string
+                full_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                send_notify:
+                  type: boolean
+              required:
+              - username
+              - email
+      description: Requires the authenticated user to be a site administrator.
+  /admin/users/{username}:
+    patch:
+      operationId: adminEditUser
+      summary: Edit an existing user
+      tags:
+      - Administration
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_id:
+                  type: integer
+                login_name:
+                  type: string
+                full_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                website:
+                  type: string
+                location:
+                  type: string
+                active:
+                  type: boolean
+                admin:
+                  type: boolean
+                allow_git_hook:
+                  type: boolean
+                allow_import_local:
+                  type: boolean
+                max_repo_creation:
+                  type: integer
+                  description: Maximum number of repositories the user can create. -1 means no limit.
+              required:
+              - email
+      description: Requires the authenticated user to be a site administrator.
+    delete:
+      operationId: adminDeleteUser
+      summary: Delete a user
+      tags:
+      - Administration
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      description: Requires the authenticated user to be a site administrator.
+  /admin/users/{username}/keys:
+    post:
+      operationId: adminCreateUserKey
+      summary: Create a public key for a user
+      tags:
+      - Administration
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicKey'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                key:
+                  type: string
+              required:
+              - title
+              - key
+      description: Requires the authenticated user to be a site administrator.
+  /admin/users/{username}/repos:
+    post:
+      operationId: adminCreateRepo
+      summary: Create a repository for a user
+      tags:
+      - Administration
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Repository'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                private:
+                  type: boolean
+                  default: false
+                auto_init:
+                  type: boolean
+                  default: false
+                gitignores:
+                  type: string
+                license:
+                  type: string
+                readme:
+                  type: string
+                  default: Default
+              required:
+              - name
+      description: Requires the authenticated user to be a site administrator.
+  /admin/users/{username}/orgs:
+    post:
+      operationId: adminCreateOrg
+      summary: Create an organization
+      tags:
+      - Administration
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                full_name:
+                  type: string
+                description:
+                  type: string
+                website:
+                  type: string
+                location:
+                  type: string
+              required:
+              - username
+      description: Requires the authenticated user to be a site administrator.
+  /admin/orgs/{orgname}/teams:
+    post:
+      operationId: adminCreateTeam
+      summary: Create a team
+      tags:
+      - Administration
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: orgname
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Organization name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                permission:
+                  type: string
+                  enum:
+                  - read
+                  - write
+                  - admin
+                  default: read
+              required:
+              - name
+      description: Requires the authenticated user to be a site administrator.
+  /admin/teams/{teamid}/members:
+    get:
+      operationId: adminListTeamMembers
+      summary: List all members of a team
+      tags:
+      - Administration
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: teamid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Team ID
+      description: Requires the authenticated user to be a site administrator.
+  /admin/teams/{teamid}/members/{username}:
+    put:
+      operationId: adminAddTeamMember
+      summary: Add team membership
+      tags:
+      - Administration
+      responses:
+        '204':
+          description: Team membership has been updated.
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: teamid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Team ID
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      description: Requires the authenticated user to be a site administrator.
+    delete:
+      operationId: adminRemoveTeamMember
+      summary: Remove team membership
+      tags:
+      - Administration
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: teamid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Team ID
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username
+      description: Requires the authenticated user to be a site administrator.
+  /admin/teams/{teamid}/repos/{reponame}:
+    put:
+      operationId: adminAddTeamRepo
+      summary: Add or update team repository
+      tags:
+      - Administration
+      responses:
+        '204':
+          description: Team repository has been updated.
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: teamid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Team ID
+      - name: reponame
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      description: Requires the authenticated user to be a site administrator.
+    delete:
+      operationId: adminRemoveTeamRepo
+      summary: Remove team repository
+      tags:
+      - Administration
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: teamid
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Team ID
+      - name: reponame
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      description: Requires the authenticated user to be a site administrator.
+components:
+  schemas:
+    PublicKey:
+      type: object
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        url:
+          type: string
+        title:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    Repository:
+      type: object
+      properties:
+        id:
+          type: integer
+        owner:
+          $ref: '#/components/schemas/User'
+        name:
+          type: string
+        full_name:
+          type: string
+        description:
+          type: string
+        private:
+          type: boolean
+        fork:
+          type: boolean
+        parent:
+          $ref: '#/components/schemas/Repository'
+          description: Present when fork is true
+        empty:
+          type: boolean
+        mirror:
+          type: boolean
+        size:
+          type: integer
+        html_url:
+          type: string
+        ssh_url:
+          type: string
+        clone_url:
+          type: string
+        website:
+          type: string
+        stars_count:
+          type: integer
+        forks_count:
+          type: integer
+        watchers_count:
+          type: integer
+        open_issues_count:
+          type: integer
+        default_branch:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        permissions:
+          type: object
+          properties:
+            admin:
+              type: boolean
+            push:
+              type: boolean
+            pull:
+              type: boolean
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        full_name:
+          type: string
+        avatar_url:
+          type: string
+        description:
+          type: string
+        website:
+          type: string
+        location:
+          type: string
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        permission:
+          type: string
+          enum:
+          - read
+          - write
+          - admin
+          - owner
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

@@ -1,0 +1,333 @@
+{
+  "@context": {
+    "@vocab": "https://gogs.io/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "gogs": "https://gogs.io/schema#",
+    "User": "gogs:User",
+    "id": {
+      "@id": "gogs:id",
+      "@type": "xsd:integer"
+    },
+    "username": {
+      "@id": "gogs:username",
+      "@type": "xsd:string"
+    },
+    "login": {
+      "@id": "gogs:login",
+      "@type": "xsd:string"
+    },
+    "full_name": {
+      "@id": "gogs:full_name",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "gogs:email",
+      "@type": "xsd:string"
+    },
+    "avatar_url": {
+      "@id": "gogs:avatar_url",
+      "@type": "xsd:string"
+    },
+    "Repository": "gogs:Repository",
+    "owner": {
+      "@id": "gogs:owner",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "gogs:name",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "gogs:description",
+      "@type": "xsd:string"
+    },
+    "private": {
+      "@id": "gogs:private",
+      "@type": "xsd:boolean"
+    },
+    "fork": {
+      "@id": "gogs:fork",
+      "@type": "xsd:boolean"
+    },
+    "parent": {
+      "@id": "gogs:parent",
+      "@type": "@id"
+    },
+    "empty": {
+      "@id": "gogs:empty",
+      "@type": "xsd:boolean"
+    },
+    "mirror": {
+      "@id": "gogs:mirror",
+      "@type": "xsd:boolean"
+    },
+    "size": {
+      "@id": "gogs:size",
+      "@type": "xsd:integer"
+    },
+    "html_url": {
+      "@id": "gogs:html_url",
+      "@type": "xsd:string"
+    },
+    "ssh_url": {
+      "@id": "gogs:ssh_url",
+      "@type": "xsd:string"
+    },
+    "clone_url": {
+      "@id": "gogs:clone_url",
+      "@type": "xsd:string"
+    },
+    "website": {
+      "@id": "gogs:website",
+      "@type": "xsd:string"
+    },
+    "stars_count": {
+      "@id": "gogs:stars_count",
+      "@type": "xsd:integer"
+    },
+    "forks_count": {
+      "@id": "gogs:forks_count",
+      "@type": "xsd:integer"
+    },
+    "watchers_count": {
+      "@id": "gogs:watchers_count",
+      "@type": "xsd:integer"
+    },
+    "open_issues_count": {
+      "@id": "gogs:open_issues_count",
+      "@type": "xsd:integer"
+    },
+    "default_branch": {
+      "@id": "gogs:default_branch",
+      "@type": "xsd:string"
+    },
+    "created_at": {
+      "@id": "gogs:created_at",
+      "@type": "xsd:dateTime"
+    },
+    "updated_at": {
+      "@id": "gogs:updated_at",
+      "@type": "xsd:dateTime"
+    },
+    "permissions": {
+      "@id": "gogs:permissions"
+    },
+    "Branch": "gogs:Branch",
+    "commit": {
+      "@id": "gogs:commit"
+    },
+    "Commit": "gogs:Commit",
+    "url": {
+      "@id": "gogs:url",
+      "@type": "xsd:string"
+    },
+    "sha": {
+      "@id": "gogs:sha",
+      "@type": "xsd:string"
+    },
+    "author": {
+      "@id": "gogs:author",
+      "@type": "@id"
+    },
+    "committer": {
+      "@id": "gogs:committer",
+      "@type": "@id"
+    },
+    "parents": {
+      "@id": "gogs:parents",
+      "@container": "@list"
+    },
+    "Issue": "gogs:Issue",
+    "number": {
+      "@id": "gogs:number",
+      "@type": "xsd:integer"
+    },
+    "state": {
+      "@id": "gogs:state",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "gogs:title",
+      "@type": "xsd:string"
+    },
+    "body": {
+      "@id": "gogs:body",
+      "@type": "xsd:string"
+    },
+    "user": {
+      "@id": "gogs:user",
+      "@type": "@id"
+    },
+    "labels": {
+      "@id": "gogs:labels",
+      "@container": "@list"
+    },
+    "assignee": {
+      "@id": "gogs:assignee",
+      "@type": "@id"
+    },
+    "milestone": {
+      "@id": "gogs:milestone",
+      "@type": "@id"
+    },
+    "comments": {
+      "@id": "gogs:comments",
+      "@type": "xsd:integer"
+    },
+    "pull_request": {
+      "@id": "gogs:pull_request"
+    },
+    "Comment": "gogs:Comment",
+    "Label": "gogs:Label",
+    "color": {
+      "@id": "gogs:color",
+      "@type": "xsd:string"
+    },
+    "Milestone": "gogs:Milestone",
+    "open_issues": {
+      "@id": "gogs:open_issues",
+      "@type": "xsd:integer"
+    },
+    "closed_issues": {
+      "@id": "gogs:closed_issues",
+      "@type": "xsd:integer"
+    },
+    "closed_at": {
+      "@id": "gogs:closed_at",
+      "@type": "xsd:dateTime"
+    },
+    "due_on": {
+      "@id": "gogs:due_on",
+      "@type": "xsd:dateTime"
+    },
+    "Hook": "gogs:Hook",
+    "type": {
+      "@id": "gogs:type",
+      "@type": "xsd:string"
+    },
+    "events": {
+      "@id": "gogs:events",
+      "@container": "@list"
+    },
+    "active": {
+      "@id": "gogs:active",
+      "@type": "xsd:boolean"
+    },
+    "config": {
+      "@id": "gogs:config"
+    },
+    "Release": "gogs:Release",
+    "tag_name": {
+      "@id": "gogs:tag_name",
+      "@type": "xsd:string"
+    },
+    "target_commitish": {
+      "@id": "gogs:target_commitish",
+      "@type": "xsd:string"
+    },
+    "draft": {
+      "@id": "gogs:draft",
+      "@type": "xsd:boolean"
+    },
+    "prerelease": {
+      "@id": "gogs:prerelease",
+      "@type": "xsd:boolean"
+    },
+    "DeployKey": "gogs:DeployKey",
+    "key": {
+      "@id": "gogs:key",
+      "@type": "xsd:string"
+    },
+    "read_only": {
+      "@id": "gogs:read_only",
+      "@type": "xsd:boolean"
+    },
+    "PublicKey": "gogs:PublicKey",
+    "AccessToken": "gogs:AccessToken",
+    "sha1": {
+      "@id": "gogs:sha1",
+      "@type": "xsd:string"
+    },
+    "Email": "gogs:Email",
+    "verified": {
+      "@id": "gogs:verified",
+      "@type": "xsd:boolean"
+    },
+    "primary": {
+      "@id": "gogs:primary",
+      "@type": "xsd:boolean"
+    },
+    "Organization": "gogs:Organization",
+    "location": {
+      "@id": "gogs:location",
+      "@type": "xsd:string"
+    },
+    "Team": "gogs:Team",
+    "permission": {
+      "@id": "gogs:permission",
+      "@type": "xsd:string"
+    },
+    "Content": "gogs:Content",
+    "encoding": {
+      "@id": "gogs:encoding",
+      "@type": "xsd:string"
+    },
+    "path": {
+      "@id": "gogs:path",
+      "@type": "xsd:string"
+    },
+    "content": {
+      "@id": "gogs:content",
+      "@type": "xsd:string"
+    },
+    "git_url": {
+      "@id": "gogs:git_url",
+      "@type": "xsd:string"
+    },
+    "download_url": {
+      "@id": "gogs:download_url",
+      "@type": "xsd:string"
+    },
+    "_links": {
+      "@id": "gogs:_links"
+    },
+    "GitTree": "gogs:GitTree",
+    "tree": {
+      "@id": "gogs:tree",
+      "@container": "@list"
+    },
+    "Error": "gogs:Error",
+    "message": {
+      "@id": "gogs:message",
+      "@type": "xsd:string"
+    },
+    "GitBlob": "gogs:GitBlob",
+    "Tag": "gogs:Tag",
+    "EditorConfigDefinition": "gogs:EditorConfigDefinition",
+    "charset": {
+      "@id": "gogs:charset",
+      "@type": "xsd:string"
+    },
+    "indent_style": {
+      "@id": "gogs:indent_style",
+      "@type": "xsd:string"
+    },
+    "indent_size": {
+      "@id": "gogs:indent_size",
+      "@type": "xsd:string"
+    },
+    "end_of_line": {
+      "@id": "gogs:end_of_line",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Gogs API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Gogs's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-21) from openapi/gogs-openapi.json.",
+  "dcterms:created": "2026-09-21",
+  "dcterms:source": [
+    "openapi/gogs-openapi.json"
+  ]
+}

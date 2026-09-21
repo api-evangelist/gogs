@@ -1,0 +1,183 @@
+openapi: 3.2.0
+info:
+  title: Gogs Miscellaneous API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Miscellaneous
+  description: Markdown rendering and Git data endpoints
+paths:
+  /markdown:
+    post:
+      operationId: renderMarkdown
+      summary: Render a Markdown document
+      tags:
+      - Miscellaneous
+      responses:
+        '200':
+          description: Rendered HTML
+          content:
+            text/html:
+              schema:
+                type: string
+        '422':
+          description: Validation error.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                context:
+                  type: string
+                  description: Repository context URL
+              required:
+              - text
+  /markdown/raw:
+    post:
+      operationId: renderMarkdownRaw
+      summary: Render a Markdown document in raw mode
+      tags:
+      - Miscellaneous
+      responses:
+        '200':
+          description: Rendered HTML
+          content:
+            text/html:
+              schema:
+                type: string
+        '422':
+          description: Validation error.
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      description: Takes a Markdown document as plaintext and renders it without a repository context.
+  /repos/{owner}/{repo}/git/trees/{sha}:
+    get:
+      operationId: getTree
+      summary: Get a tree
+      tags:
+      - Miscellaneous
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitTree'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: sha
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Tree SHA
+  /repos/{owner}/{repo}/git/blobs/{sha}:
+    get:
+      operationId: getGitBlob
+      summary: Get a git blob
+      description: Returns the content of a git blob object, base64 encoded.
+      tags:
+      - Miscellaneous
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Owner of the repository
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Name of the repository
+      - name: sha
+        in: path
+        required: true
+        schema:
+          type: string
+        description: SHA of the git blob
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitBlob'
+        '404':
+          description: Blob not found.
+components:
+  schemas:
+    GitBlob:
+      type: object
+      properties:
+        content:
+          type: string
+          description: Base64-encoded blob content
+        encoding:
+          type: string
+          example: base64
+        url:
+          type: string
+        sha:
+          type: string
+        size:
+          type: integer
+    GitTree:
+      type: object
+      properties:
+        sha:
+          type: string
+        url:
+          type: string
+        tree:
+          type: array
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+              mode:
+                type: string
+              type:
+                type: string
+              size:
+                type: integer
+              sha:
+                type: string
+              url:
+                type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

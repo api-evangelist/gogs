@@ -1,0 +1,345 @@
+openapi: 3.2.0
+info:
+  title: Gogs Collaborators and Deploy Keys API
+  version: v1
+  description: RESTful API for interacting with your Gogs instance. Follows a format similar to the GitHub REST API v3.
+servers:
+- url: https://gogs.example.com/api/v1
+security:
+- AccessToken: []
+tags:
+- name: Collaborators and Deploy Keys
+  description: Manage repository collaborators and deploy keys
+paths:
+  /repos/{owner}/{repo}/collaborators:
+    get:
+      operationId: listCollaborators
+      summary: List collaborators
+      tags:
+      - Collaborators and Deploy Keys
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collaborator'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+  /repos/{owner}/{repo}/collaborators/{collaborator}:
+    put:
+      operationId: addCollaborator
+      summary: Add a collaborator
+      tags:
+      - Collaborators and Deploy Keys
+      responses:
+        '204':
+          description: Collaborator has been added.
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: collaborator
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Collaborator username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permission:
+                  type: string
+                  enum:
+                  - read
+                  - write
+                  - admin
+                  default: write
+    delete:
+      operationId: removeCollaborator
+      summary: Remove a collaborator
+      tags:
+      - Collaborators and Deploy Keys
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: collaborator
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Collaborator username
+    get:
+      operationId: isCollaborator
+      summary: Check if a user is a collaborator
+      description: Returns 204 if the user is a collaborator, 404 if not.
+      tags:
+      - Collaborators and Deploy Keys
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Owner of the repository
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Name of the repository
+      - name: collaborator
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Username to check
+      responses:
+        '204':
+          description: User is a collaborator.
+        '404':
+          description: User is not a collaborator.
+        '422':
+          description: The specified user does not exist.
+  /repos/{owner}/{repo}/keys:
+    get:
+      operationId: listDeployKeys
+      summary: List deploy keys
+      tags:
+      - Collaborators and Deploy Keys
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeployKey'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+    post:
+      operationId: createDeployKey
+      summary: Add a deploy key
+      tags:
+      - Collaborators and Deploy Keys
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeployKey'
+        '404':
+          description: Resource not found.
+        '422':
+          description: Validation error.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                key:
+                  type: string
+              required:
+              - title
+              - key
+  /repos/{owner}/{repo}/keys/{id}:
+    get:
+      operationId: getDeployKey
+      summary: Get a deploy key
+      tags:
+      - Collaborators and Deploy Keys
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeployKey'
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Key ID
+    delete:
+      operationId: removeDeployKey
+      summary: Remove a deploy key
+      tags:
+      - Collaborators and Deploy Keys
+      responses:
+        '204':
+          description: The resource has been successfully deleted.
+        '404':
+          description: Resource not found.
+      parameters:
+      - name: owner
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository owner
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Repository name
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Key ID
+components:
+  schemas:
+    Collaborator:
+      description: A repository collaborator with permission information
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        properties:
+          permissions:
+            type: object
+            properties:
+              admin:
+                type: boolean
+              push:
+                type: boolean
+              pull:
+                type: boolean
+    DeployKey:
+      type: object
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        url:
+          type: string
+        title:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        read_only:
+          type: boolean
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Personal access token. Use format: token {YOUR_ACCESS_TOKEN}'

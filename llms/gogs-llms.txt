@@ -1,0 +1,125 @@
+# Gogs: A painless self-hosted Git service
+
+- [Introduction](https://gogs.io/getting-started/introduction.md): The painless way to host your own Git service
+- [Installation](https://gogs.io/getting-started/installation.md): Get your own Git service up and running in minutes
+- [Configuration primer](https://gogs.io/fine-tuning/configuration-primer.md): Fine tune your instance exactly the way you want.
+- [Reverse proxy](https://gogs.io/fine-tuning/reverse-proxy.md): Host-sharing your Git service with HTTPS
+- [Run as service](https://gogs.io/fine-tuning/run-as-service.md): Configure Gogs to start automatically as a system service on Linux, macOS, and Windows
+- [Authentication](https://gogs.io/advancing/authentication.md): Integrate with your existing IAM system
+- [Webhooks](https://gogs.io/advancing/webhooks.md): Stay informed for repository events
+- [Git LFS](https://gogs.io/advancing/git-lfs.md): Managing large binary files with some magic
+- [Custom templates](https://gogs.io/advancing/custom-templates.md): Override HTML templates, static files, and inject custom content
+- [Localization](https://gogs.io/advancing/localization.md): Configure interface languages and contribute translations to Gogs
+- [CLI reference](https://gogs.io/advancing/cli-reference.md): Discover all the commands available in the gogs binary
+- [Release strategy](https://gogs.io/asking/release-strategy.md): What you need to know about backwards compatibility
+- [Troubleshooting](https://gogs.io/asking/troubleshooting.md): Common issues and their solutions when running Gogs
+- [FAQ](https://gogs.io/asking/faq.md): Frequently asked questions about using and administering Gogs
+- [Introduction](https://gogs.io/api-reference/introduction.md): Overview of the Gogs API including authentication, pagination, and schema
+- [Search repositories](https://gogs.io/api-reference/repositories/search-repositories.md)
+- [List your repositories](https://gogs.io/api-reference/repositories/list-your-repositories.md)
+- [Create a repository](https://gogs.io/api-reference/repositories/create-a-repository.md)
+- [List user repositories](https://gogs.io/api-reference/repositories/list-user-repositories.md)
+- [List organization repositories](https://gogs.io/api-reference/repositories/list-organization-repositories.md)
+- [Create a repository in an organization](https://gogs.io/api-reference/repositories/create-a-repository-in-an-organization.md): The authenticated user must be an owner of the specified organization.
+- [Migrate a repository](https://gogs.io/api-reference/repositories/migrate-a-repository.md)
+- [Get a repository](https://gogs.io/api-reference/repositories/get-a-repository.md)
+- [Delete a repository](https://gogs.io/api-reference/repositories/delete-a-repository.md): Requires owner access to the repository.
+- [Edit issue tracker settings](https://gogs.io/api-reference/repositories/edit-issue-tracker-settings.md)
+- [Mirror sync](https://gogs.io/api-reference/repositories/mirror-sync.md): Add a mirror repository to the sync queue. Returns 404 if the repository is not a mirror.
+- [List branches](https://gogs.io/api-reference/repositories/list-branches.md)
+- [Get a branch](https://gogs.io/api-reference/repositories/get-a-branch.md)
+- [Get a single commit](https://gogs.io/api-reference/repositories/get-a-single-commit.md): Get details for a single commit. Set Accept header to application/vnd.gogs.sha to return only the SHA-1 hash of a commit reference.
+- [Download raw content](https://gogs.io/api-reference/repositories/download-raw-content.md)
+- [Download archive](https://gogs.io/api-reference/repositories/download-archive.md)
+- [Get contents](https://gogs.io/api-reference/repositories/get-contents.md): Get the contents of a file, directory, symlink, or submodule in a repository.
+- [Create or update a file](https://gogs.io/api-reference/repositories/create-or-update-a-file.md): Creates or updates a file in the repository. The content must be base64 encoded.
+- [List forks](https://gogs.io/api-reference/repositories/list-forks.md)
+- [List tags](https://gogs.io/api-reference/repositories/list-tags.md)
+- [List all commits](https://gogs.io/api-reference/repositories/list-all-commits.md): Returns commits from the HEAD of the default branch.
+- [Edit wiki settings](https://gogs.io/api-reference/repositories/edit-wiki-settings.md)
+- [Get editorconfig definition](https://gogs.io/api-reference/repositories/get-editorconfig-definition.md): Returns the editorconfig definition for the given filename in the repository.
+- [List collaborators](https://gogs.io/api-reference/collaborators-and-deploy-keys/list-collaborators.md)
+- [Check if a user is a collaborator](https://gogs.io/api-reference/collaborators-and-deploy-keys/check-if-user-is-collaborator.md): Returns 204 if the user is a collaborator, 404 if not.
+- [Add a collaborator](https://gogs.io/api-reference/collaborators-and-deploy-keys/add-a-collaborator.md)
+- [Remove a collaborator](https://gogs.io/api-reference/collaborators-and-deploy-keys/remove-a-collaborator.md)
+- [List deploy keys](https://gogs.io/api-reference/collaborators-and-deploy-keys/list-deploy-keys.md)
+- [Add a deploy key](https://gogs.io/api-reference/collaborators-and-deploy-keys/add-a-deploy-key.md)
+- [Get a deploy key](https://gogs.io/api-reference/collaborators-and-deploy-keys/get-a-deploy-key.md)
+- [Remove a deploy key](https://gogs.io/api-reference/collaborators-and-deploy-keys/remove-a-deploy-key.md)
+- [List releases](https://gogs.io/api-reference/releases/list-releases.md)
+- [List hooks](https://gogs.io/api-reference/webhooks/list-hooks.md)
+- [Create a hook](https://gogs.io/api-reference/webhooks/create-a-hook.md)
+- [Edit a hook](https://gogs.io/api-reference/webhooks/edit-a-hook.md)
+- [Delete a hook](https://gogs.io/api-reference/webhooks/delete-a-hook.md)
+- [List user issues](https://gogs.io/api-reference/issues/list-user-issues.md): Lists issues across all repositories assigned to the authenticated user. Also available at `GET /issues`.
+- [List issues for a repository](https://gogs.io/api-reference/issues/list-issues-for-a-repository.md): This endpoint may also return pull requests. If an issue is a pull request, the object will include a pull_request key.
+- [Create an issue](https://gogs.io/api-reference/issues/create-an-issue.md)
+- [Get a single issue](https://gogs.io/api-reference/issues/get-a-single-issue.md)
+- [Edit an issue](https://gogs.io/api-reference/issues/edit-an-issue.md)
+- [List comments on an issue](https://gogs.io/api-reference/issues/list-comments-on-an-issue.md)
+- [Create a comment](https://gogs.io/api-reference/issues/create-a-comment.md)
+- [List comments in a repository](https://gogs.io/api-reference/issues/list-comments-in-a-repository.md)
+- [Edit a comment](https://gogs.io/api-reference/issues/edit-a-comment.md)
+- [Delete a comment](https://gogs.io/api-reference/issues/delete-a-comment.md)
+- [List all labels for a repository](https://gogs.io/api-reference/issues/list-all-labels-for-a-repository.md)
+- [Create a label](https://gogs.io/api-reference/issues/create-a-label.md)
+- [Get a single label](https://gogs.io/api-reference/issues/get-a-single-label.md)
+- [Update a label](https://gogs.io/api-reference/issues/update-a-label.md)
+- [Delete a label](https://gogs.io/api-reference/issues/delete-a-label.md)
+- [List labels on an issue](https://gogs.io/api-reference/issues/list-labels-on-an-issue.md)
+- [Add labels to an issue](https://gogs.io/api-reference/issues/add-labels-to-an-issue.md)
+- [Replace all labels for an issue](https://gogs.io/api-reference/issues/replace-all-labels-for-an-issue.md)
+- [Remove all labels from an issue](https://gogs.io/api-reference/issues/remove-all-labels-from-an-issue.md)
+- [Remove a label from an issue](https://gogs.io/api-reference/issues/remove-a-label-from-an-issue.md)
+- [List milestones for a repository](https://gogs.io/api-reference/issues/list-milestones-for-a-repository.md)
+- [Create a milestone](https://gogs.io/api-reference/issues/create-a-milestone.md)
+- [Get a single milestone](https://gogs.io/api-reference/issues/get-a-single-milestone.md)
+- [Edit a milestone](https://gogs.io/api-reference/issues/edit-a-milestone.md)
+- [Delete a milestone](https://gogs.io/api-reference/issues/delete-a-milestone.md): Only users with write access to a repository can delete a milestone.
+- [Search for users](https://gogs.io/api-reference/users/search-for-users.md): Requests without authentication will return an empty email field for anti-spam purposes.
+- [Get a single user](https://gogs.io/api-reference/users/get-a-single-user.md)
+- [Get the authenticated user](https://gogs.io/api-reference/users/get-the-authenticated-user.md)
+- [List access tokens](https://gogs.io/api-reference/users/list-access-tokens.md): Requires basic authentication.
+- [Create an access token](https://gogs.io/api-reference/users/create-an-access-token.md): Requires basic authentication.
+- [List email addresses](https://gogs.io/api-reference/users/list-email-addresses.md)
+- [Add email addresses](https://gogs.io/api-reference/users/add-email-addresses.md)
+- [Delete email addresses](https://gogs.io/api-reference/users/delete-email-addresses.md)
+- [List followers of a user](https://gogs.io/api-reference/users/list-followers-of-a-user.md)
+- [List your followers](https://gogs.io/api-reference/users/list-your-followers.md)
+- [List users followed by a user](https://gogs.io/api-reference/users/list-users-followed-by-a-user.md)
+- [List who you are following](https://gogs.io/api-reference/users/list-who-you-are-following.md)
+- [Check if you follow a user](https://gogs.io/api-reference/users/check-if-you-follow-a-user.md)
+- [Follow a user](https://gogs.io/api-reference/users/follow-a-user.md)
+- [Unfollow a user](https://gogs.io/api-reference/users/unfollow-a-user.md)
+- [Check if a user follows another](https://gogs.io/api-reference/users/check-if-a-user-follows-another.md)
+- [List public keys for a user](https://gogs.io/api-reference/users/list-public-keys-for-a-user.md)
+- [Get a single public key](https://gogs.io/api-reference/users/get-a-single-public-key.md)
+- [Delete a public key](https://gogs.io/api-reference/users/delete-a-public-key.md)
+- [List your public keys](https://gogs.io/api-reference/users/list-your-public-keys.md)
+- [Create a public key](https://gogs.io/api-reference/users/create-a-public-key.md)
+- [Create an organization](https://gogs.io/api-reference/organizations/create-an-organization-for-user.md): Creates an organization for the authenticated user.
+- [List your organizations](https://gogs.io/api-reference/organizations/list-your-organizations.md)
+- [List user organizations](https://gogs.io/api-reference/organizations/list-user-organizations.md)
+- [Get an organization](https://gogs.io/api-reference/organizations/get-an-organization.md)
+- [Edit an organization](https://gogs.io/api-reference/organizations/edit-an-organization.md)
+- [List teams of an organization](https://gogs.io/api-reference/organizations/list-teams-of-an-organization.md)
+- [Create a new user](https://gogs.io/api-reference/administration/create-a-new-user.md): Requires the authenticated user to be a site administrator.
+- [Edit an existing user](https://gogs.io/api-reference/administration/edit-an-existing-user.md): Requires the authenticated user to be a site administrator.
+- [Delete a user](https://gogs.io/api-reference/administration/delete-a-user.md): Requires the authenticated user to be a site administrator.
+- [Create a public key for a user](https://gogs.io/api-reference/administration/create-a-public-key-for-a-user.md): Requires the authenticated user to be a site administrator.
+- [Create a repository for a user](https://gogs.io/api-reference/administration/create-a-repository-for-a-user.md): Requires the authenticated user to be a site administrator.
+- [Create an organization](https://gogs.io/api-reference/administration/create-an-organization.md): Requires the authenticated user to be a site administrator.
+- [Create a team](https://gogs.io/api-reference/administration/create-a-team.md): Requires the authenticated user to be a site administrator.
+- [List all members of a team](https://gogs.io/api-reference/administration/list-all-members-of-a-team.md): Requires the authenticated user to be a site administrator.
+- [Add team membership](https://gogs.io/api-reference/administration/add-team-membership.md): Requires the authenticated user to be a site administrator.
+- [Remove team membership](https://gogs.io/api-reference/administration/remove-team-membership.md): Requires the authenticated user to be a site administrator.
+- [Add or update team repository](https://gogs.io/api-reference/administration/add-or-update-team-repository.md): Requires the authenticated user to be a site administrator.
+- [Remove team repository](https://gogs.io/api-reference/administration/remove-team-repository.md): Requires the authenticated user to be a site administrator.
+- [Render a Markdown document](https://gogs.io/api-reference/miscellaneous/render-a-markdown-document.md)
+- [Render a Markdown document in raw mode](https://gogs.io/api-reference/miscellaneous/render-a-markdown-document-in-raw-mode.md): Takes a Markdown document as plaintext and renders it without a repository context.
+- [Get a tree](https://gogs.io/api-reference/miscellaneous/get-a-tree.md)
+- [Get a git blob](https://gogs.io/api-reference/miscellaneous/get-a-git-blob.md): Returns the content of a git blob object, base64 encoded.
+
+## OpenAPI Specs
+
+- [openapi](/api-reference/openapi.json)

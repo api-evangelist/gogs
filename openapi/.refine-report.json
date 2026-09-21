@@ -1,0 +1,27 @@
+{
+  "provider": "gogs",
+  "sources": [
+    "gogs-openapi.json"
+  ],
+  "outputs": [
+    "gogs-administration-api-openapi.yml",
+    "gogs-collaborators-and-deploy-keys-api-openapi.yml",
+    "gogs-issues-api-openapi.yml",
+    "gogs-miscellaneous-api-openapi.yml",
+    "gogs-organizations-api-openapi.yml",
+    "gogs-releases-api-openapi.yml",
+    "gogs-repositories-api-openapi.yml",
+    "gogs-users-api-openapi.yml",
+    "gogs-webhooks-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/gogs-openapi.json"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "gogs-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+9 apis, 10 total)"
+  ],
+  "skipped": []
+}
