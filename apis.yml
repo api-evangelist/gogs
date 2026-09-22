@@ -26,6 +26,12 @@ modified: '2026-09-21'
 tags:
 - Company
 - Git
+- Self-Hosted
+- Open-Source
+- Go
+tags_raw:
+- Company
+- Git
 - Self-hosted
 - Open-source
 - Go
@@ -113,7 +119,8 @@ apis:
   name: Gogs Miscellaneous API
   description: Markdown rendering and Git data endpoints
   humanURL: https://gogs.io/api-reference/introduction
-  tags:
+  tags: []
+  tags_raw:
   - Miscellaneous
   properties:
   - type: OpenAPI
@@ -123,6 +130,8 @@ apis:
   description: Manage organizations, members, and teams
   humanURL: https://gogs.io/api-reference/introduction
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -150,6 +159,8 @@ apis:
   description: Search users, manage access tokens, emails, followers, and public keys
   humanURL: https://gogs.io/api-reference/introduction
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -159,6 +170,8 @@ apis:
   description: Create, edit, and delete repository webhooks
   humanURL: https://gogs.io/api-reference/introduction
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
