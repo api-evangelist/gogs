@@ -438,20 +438,39 @@ paths:
       description: Requires the authenticated user to be a site administrator.
 components:
   schemas:
-    PublicKey:
+    Organization:
       type: object
       properties:
         id:
           type: integer
-        key:
+        username:
           type: string
-        url:
+        full_name:
           type: string
-        title:
+        avatar_url:
           type: string
-        created_at:
+        description:
           type: string
-          format: date-time
+        website:
+          type: string
+        location:
+          type: string
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        permission:
+          type: string
+          enum:
+          - read
+          - write
+          - admin
+          - owner
     Repository:
       type: object
       properties:
@@ -528,39 +547,20 @@ components:
           format: email
         avatar_url:
           type: string
-    Organization:
+    PublicKey:
       type: object
       properties:
         id:
           type: integer
-        username:
+        key:
           type: string
-        full_name:
+        url:
           type: string
-        avatar_url:
+        title:
           type: string
-        description:
+        created_at:
           type: string
-        website:
-          type: string
-        location:
-          type: string
-    Team:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        permission:
-          type: string
-          enum:
-          - read
-          - write
-          - admin
-          - owner
+          format: date-time
   securitySchemes:
     BasicAuth:
       type: http

@@ -27,14 +27,17 @@ tags:
 - Company
 - Git
 - Self-Hosted
-- Open-Source
+- Open Source
 - Go
+- A2A
 tags_raw:
 - Company
 - Git
 - Self-hosted
 - Open-source
 - Go
+- Open-Source
+- A2A
 
 maintainers:
 - FN: Kin Lane
@@ -190,3 +193,10 @@ x-enrichment:
   artifacts_added: 21
   pass: modular-v1
   engine: identity=local,contract=local,surfaces=local,docs=local
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://gogs.io/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

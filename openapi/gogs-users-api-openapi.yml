@@ -476,6 +476,13 @@ paths:
               - key
 components:
   schemas:
+    AccessToken:
+      type: object
+      properties:
+        name:
+          type: string
+        sha1:
+          type: string
     PublicKey:
       type: object
       properties:
@@ -500,13 +507,6 @@ components:
           type: boolean
         primary:
           type: boolean
-    AccessToken:
-      type: object
-      properties:
-        name:
-          type: string
-        sha1:
-          type: string
     User:
       type: object
       properties:

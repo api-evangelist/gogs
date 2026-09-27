@@ -286,6 +286,23 @@ paths:
         description: Key ID
 components:
   schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
     Collaborator:
       description: A repository collaborator with permission information
       allOf:
@@ -317,23 +334,6 @@ components:
           format: date-time
         read_only:
           type: boolean
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        login:
-          type: string
-          description: Alias of username for GitHub API compatibility
-        full_name:
-          type: string
-        email:
-          type: string
-          format: email
-        avatar_url:
-          type: string
   securitySchemes:
     BasicAuth:
       type: http

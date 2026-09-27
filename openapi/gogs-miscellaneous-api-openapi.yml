@@ -133,21 +133,6 @@ paths:
           description: Blob not found.
 components:
   schemas:
-    GitBlob:
-      type: object
-      properties:
-        content:
-          type: string
-          description: Base64-encoded blob content
-        encoding:
-          type: string
-          example: base64
-        url:
-          type: string
-        sha:
-          type: string
-        size:
-          type: integer
     GitTree:
       type: object
       properties:
@@ -172,6 +157,21 @@ components:
                 type: string
               url:
                 type: string
+    GitBlob:
+      type: object
+      properties:
+        content:
+          type: string
+          description: Base64-encoded blob content
+        encoding:
+          type: string
+          example: base64
+        url:
+          type: string
+        sha:
+          type: string
+        size:
+          type: integer
   securitySchemes:
     BasicAuth:
       type: http

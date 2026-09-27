@@ -1036,6 +1036,17 @@ components:
           - string
           - 'null'
           format: date-time
+    Label:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        color:
+          type: string
+        url:
+          type: string
     User:
       type: object
       properties:
@@ -1052,17 +1063,6 @@ components:
           type: string
           format: email
         avatar_url:
-          type: string
-    Label:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        color:
-          type: string
-        url:
           type: string
     Comment:
       type: object
