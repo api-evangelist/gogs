@@ -1008,6 +1008,40 @@ paths:
                   $ref: '#/components/schemas/Issue'
 components:
   schemas:
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        html_url:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
     Milestone:
       type: object
       properties:
@@ -1047,40 +1081,6 @@ components:
           type: string
         url:
           type: string
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        login:
-          type: string
-          description: Alias of username for GitHub API compatibility
-        full_name:
-          type: string
-        email:
-          type: string
-          format: email
-        avatar_url:
-          type: string
-    Comment:
-      type: object
-      properties:
-        id:
-          type: integer
-        html_url:
-          type: string
-        user:
-          $ref: '#/components/schemas/User'
-        body:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
     Issue:
       type: object
       properties:

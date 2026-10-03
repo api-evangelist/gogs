@@ -170,6 +170,22 @@ paths:
         description: Organization name
 components:
   schemas:
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        permission:
+          type: string
+          enum:
+          - read
+          - write
+          - admin
+          - owner
     Organization:
       type: object
       properties:
@@ -187,22 +203,6 @@ components:
           type: string
         location:
           type: string
-    Team:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        permission:
-          type: string
-          enum:
-          - read
-          - write
-          - admin
-          - owner
   securitySchemes:
     BasicAuth:
       type: http

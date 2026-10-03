@@ -871,6 +871,132 @@ components:
             timestamp:
               type: string
               format: date-time
+    Repository:
+      type: object
+      properties:
+        id:
+          type: integer
+        owner:
+          $ref: '#/components/schemas/User'
+        name:
+          type: string
+        full_name:
+          type: string
+        description:
+          type: string
+        private:
+          type: boolean
+        fork:
+          type: boolean
+        parent:
+          $ref: '#/components/schemas/Repository'
+          description: Present when fork is true
+        empty:
+          type: boolean
+        mirror:
+          type: boolean
+        size:
+          type: integer
+        html_url:
+          type: string
+        ssh_url:
+          type: string
+        clone_url:
+          type: string
+        website:
+          type: string
+        stars_count:
+          type: integer
+        forks_count:
+          type: integer
+        watchers_count:
+          type: integer
+        open_issues_count:
+          type: integer
+        default_branch:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        permissions:
+          type: object
+          properties:
+            admin:
+              type: boolean
+            push:
+              type: boolean
+            pull:
+              type: boolean
+    EditorConfigDefinition:
+      type: object
+      properties:
+        charset:
+          type: string
+        indent_style:
+          type: string
+        indent_size:
+          type: string
+        end_of_line:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+    Content:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - file
+          - dir
+          - symlink
+          - submodule
+        encoding:
+          type: string
+        size:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        content:
+          type: string
+        sha:
+          type: string
+        url:
+          type: string
+        git_url:
+          type: string
+        html_url:
+          type: string
+        download_url:
+          type: string
+        _links:
+          type: object
+          properties:
+            git:
+              type: string
+            self:
+              type: string
+            html:
+              type: string
     Tag:
       type: object
       properties:
@@ -962,132 +1088,6 @@ components:
                 type: string
               sha:
                 type: string
-    Repository:
-      type: object
-      properties:
-        id:
-          type: integer
-        owner:
-          $ref: '#/components/schemas/User'
-        name:
-          type: string
-        full_name:
-          type: string
-        description:
-          type: string
-        private:
-          type: boolean
-        fork:
-          type: boolean
-        parent:
-          $ref: '#/components/schemas/Repository'
-          description: Present when fork is true
-        empty:
-          type: boolean
-        mirror:
-          type: boolean
-        size:
-          type: integer
-        html_url:
-          type: string
-        ssh_url:
-          type: string
-        clone_url:
-          type: string
-        website:
-          type: string
-        stars_count:
-          type: integer
-        forks_count:
-          type: integer
-        watchers_count:
-          type: integer
-        open_issues_count:
-          type: integer
-        default_branch:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        permissions:
-          type: object
-          properties:
-            admin:
-              type: boolean
-            push:
-              type: boolean
-            pull:
-              type: boolean
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        login:
-          type: string
-          description: Alias of username for GitHub API compatibility
-        full_name:
-          type: string
-        email:
-          type: string
-          format: email
-        avatar_url:
-          type: string
-    Content:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - file
-          - dir
-          - symlink
-          - submodule
-        encoding:
-          type: string
-        size:
-          type: integer
-        name:
-          type: string
-        path:
-          type: string
-        content:
-          type: string
-        sha:
-          type: string
-        url:
-          type: string
-        git_url:
-          type: string
-        html_url:
-          type: string
-        download_url:
-          type: string
-        _links:
-          type: object
-          properties:
-            git:
-              type: string
-            self:
-              type: string
-            html:
-              type: string
-    EditorConfigDefinition:
-      type: object
-      properties:
-        charset:
-          type: string
-        indent_style:
-          type: string
-        indent_size:
-          type: string
-        end_of_line:
-          type: string
   securitySchemes:
     BasicAuth:
       type: http

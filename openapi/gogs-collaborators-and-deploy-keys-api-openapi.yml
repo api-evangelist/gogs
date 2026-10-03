@@ -303,21 +303,6 @@ components:
           format: email
         avatar_url:
           type: string
-    Collaborator:
-      description: A repository collaborator with permission information
-      allOf:
-      - $ref: '#/components/schemas/User'
-      - type: object
-        properties:
-          permissions:
-            type: object
-            properties:
-              admin:
-                type: boolean
-              push:
-                type: boolean
-              pull:
-                type: boolean
     DeployKey:
       type: object
       properties:
@@ -334,6 +319,21 @@ components:
           format: date-time
         read_only:
           type: boolean
+    Collaborator:
+      description: A repository collaborator with permission information
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        properties:
+          permissions:
+            type: object
+            properties:
+              admin:
+                type: boolean
+              push:
+                type: boolean
+              pull:
+                type: boolean
   securitySchemes:
     BasicAuth:
       type: http
