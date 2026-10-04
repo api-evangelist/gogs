@@ -1008,79 +1008,6 @@ paths:
                   $ref: '#/components/schemas/Issue'
 components:
   schemas:
-    Comment:
-      type: object
-      properties:
-        id:
-          type: integer
-        html_url:
-          type: string
-        user:
-          $ref: '#/components/schemas/User'
-        body:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        login:
-          type: string
-          description: Alias of username for GitHub API compatibility
-        full_name:
-          type: string
-        email:
-          type: string
-          format: email
-        avatar_url:
-          type: string
-    Milestone:
-      type: object
-      properties:
-        id:
-          type: integer
-        state:
-          type: string
-          enum:
-          - open
-          - closed
-        title:
-          type: string
-        description:
-          type: string
-        open_issues:
-          type: integer
-        closed_issues:
-          type: integer
-        closed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        due_on:
-          type:
-          - string
-          - 'null'
-          format: date-time
-    Label:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        color:
-          type: string
-        url:
-          type: string
     Issue:
       type: object
       properties:
@@ -1118,6 +1045,79 @@ components:
           format: date-time
         updated_at:
           type: string
+          format: date-time
+    Label:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        color:
+          type: string
+        url:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        html_url:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        body:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    Milestone:
+      type: object
+      properties:
+        id:
+          type: integer
+        state:
+          type: string
+          enum:
+          - open
+          - closed
+        title:
+          type: string
+        description:
+          type: string
+        open_issues:
+          type: integer
+        closed_issues:
+          type: integer
+        closed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        due_on:
+          type:
+          - string
+          - 'null'
           format: date-time
   securitySchemes:
     BasicAuth:

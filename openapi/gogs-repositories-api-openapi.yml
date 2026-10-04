@@ -836,7 +836,18 @@ paths:
           description: No editorconfig file exists or no matching definition for the filename.
 components:
   schemas:
-    Branch:
+    EditorConfigDefinition:
+      type: object
+      properties:
+        charset:
+          type: string
+        indent_style:
+          type: string
+        indent_size:
+          type: string
+        end_of_line:
+          type: string
+    Tag:
       type: object
       properties:
         name:
@@ -857,6 +868,7 @@ components:
                   type: string
                 email:
                   type: string
+                  format: email
                 username:
                   type: string
             committer:
@@ -866,11 +878,83 @@ components:
                   type: string
                 email:
                   type: string
+                  format: email
                 username:
                   type: string
             timestamp:
               type: string
               format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+    Commit:
+      type: object
+      properties:
+        url:
+          type: string
+        sha:
+          type: string
+        html_url:
+          type: string
+        commit:
+          type: object
+          properties:
+            url:
+              type: string
+            message:
+              type: string
+            author:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                date:
+                  type: string
+            committer:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                date:
+                  type: string
+            tree:
+              type: object
+              properties:
+                url:
+                  type: string
+                sha:
+                  type: string
+        author:
+          $ref: '#/components/schemas/User'
+        committer:
+          $ref: '#/components/schemas/User'
+        parents:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              sha:
+                type: string
     Repository:
       type: object
       properties:
@@ -930,34 +1014,6 @@ components:
               type: boolean
             pull:
               type: boolean
-    EditorConfigDefinition:
-      type: object
-      properties:
-        charset:
-          type: string
-        indent_style:
-          type: string
-        indent_size:
-          type: string
-        end_of_line:
-          type: string
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        login:
-          type: string
-          description: Alias of username for GitHub API compatibility
-        full_name:
-          type: string
-        email:
-          type: string
-          format: email
-        avatar_url:
-          type: string
     Content:
       type: object
       properties:
@@ -997,7 +1053,7 @@ components:
               type: string
             html:
               type: string
-    Tag:
+    Branch:
       type: object
       properties:
         name:
@@ -1018,7 +1074,6 @@ components:
                   type: string
                 email:
                   type: string
-                  format: email
                 username:
                   type: string
             committer:
@@ -1028,66 +1083,11 @@ components:
                   type: string
                 email:
                   type: string
-                  format: email
                 username:
                   type: string
             timestamp:
               type: string
               format: date-time
-    Commit:
-      type: object
-      properties:
-        url:
-          type: string
-        sha:
-          type: string
-        html_url:
-          type: string
-        commit:
-          type: object
-          properties:
-            url:
-              type: string
-            message:
-              type: string
-            author:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                date:
-                  type: string
-            committer:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                date:
-                  type: string
-            tree:
-              type: object
-              properties:
-                url:
-                  type: string
-                sha:
-                  type: string
-        author:
-          $ref: '#/components/schemas/User'
-        committer:
-          $ref: '#/components/schemas/User'
-        parents:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              sha:
-                type: string
   securitySchemes:
     BasicAuth:
       type: http

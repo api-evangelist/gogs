@@ -438,6 +438,54 @@ paths:
       description: Requires the authenticated user to be a site administrator.
 components:
   schemas:
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        full_name:
+          type: string
+        avatar_url:
+          type: string
+        description:
+          type: string
+        website:
+          type: string
+        location:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
+    PublicKey:
+      type: object
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        url:
+          type: string
+        title:
+          type: string
+        created_at:
+          type: string
+          format: date-time
     Repository:
       type: object
       properties:
@@ -497,37 +545,6 @@ components:
               type: boolean
             pull:
               type: boolean
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        login:
-          type: string
-          description: Alias of username for GitHub API compatibility
-        full_name:
-          type: string
-        email:
-          type: string
-          format: email
-        avatar_url:
-          type: string
-    PublicKey:
-      type: object
-      properties:
-        id:
-          type: integer
-        key:
-          type: string
-        url:
-          type: string
-        title:
-          type: string
-        created_at:
-          type: string
-          format: date-time
     Team:
       type: object
       properties:
@@ -544,23 +561,6 @@ components:
           - write
           - admin
           - owner
-    Organization:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        full_name:
-          type: string
-        avatar_url:
-          type: string
-        description:
-          type: string
-        website:
-          type: string
-        location:
-          type: string
   securitySchemes:
     BasicAuth:
       type: http

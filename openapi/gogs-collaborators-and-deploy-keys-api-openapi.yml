@@ -286,6 +286,22 @@ paths:
         description: Key ID
 components:
   schemas:
+    DeployKey:
+      type: object
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        url:
+          type: string
+        title:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        read_only:
+          type: boolean
     User:
       type: object
       properties:
@@ -303,22 +319,6 @@ components:
           format: email
         avatar_url:
           type: string
-    DeployKey:
-      type: object
-      properties:
-        id:
-          type: integer
-        key:
-          type: string
-        url:
-          type: string
-        title:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        read_only:
-          type: boolean
     Collaborator:
       description: A repository collaborator with permission information
       allOf:
