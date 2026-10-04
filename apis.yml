@@ -46,6 +46,9 @@ maintainers:
   email: info@apis.io
 
 common:
+- type: CapabilityMap
+  url: capabilities/gogs-capability-edges.yml
+  name: Gogs Business Capability Map
 - type: AgenticAccess
   url: agentic-access/gogs-agentic-access.yml
 - type: Spectral
