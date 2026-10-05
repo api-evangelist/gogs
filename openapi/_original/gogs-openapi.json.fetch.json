@@ -1,0 +1,12 @@
+{
+ "url": "https://gogs.io/api-reference/openapi.json",
+ "requested_url": "https://gogs.io/api-reference/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 157103,
+ "sha256": "191d2c5a59faf0702466af716e80a7d702b4c397eaf0a70138518d2bcc7b9997",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
