@@ -836,17 +836,41 @@ paths:
           description: No editorconfig file exists or no matching definition for the filename.
 components:
   schemas:
-    EditorConfigDefinition:
+    Branch:
       type: object
       properties:
-        charset:
+        name:
           type: string
-        indent_style:
-          type: string
-        indent_size:
-          type: string
-        end_of_line:
-          type: string
+        commit:
+          type: object
+          properties:
+            id:
+              type: string
+            message:
+              type: string
+            url:
+              type: string
+            author:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                username:
+                  type: string
+            committer:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                username:
+                  type: string
+            timestamp:
+              type: string
+              format: date-time
     Tag:
       type: object
       properties:
@@ -901,60 +925,6 @@ components:
           format: email
         avatar_url:
           type: string
-    Commit:
-      type: object
-      properties:
-        url:
-          type: string
-        sha:
-          type: string
-        html_url:
-          type: string
-        commit:
-          type: object
-          properties:
-            url:
-              type: string
-            message:
-              type: string
-            author:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                date:
-                  type: string
-            committer:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                date:
-                  type: string
-            tree:
-              type: object
-              properties:
-                url:
-                  type: string
-                sha:
-                  type: string
-        author:
-          $ref: '#/components/schemas/User'
-        committer:
-          $ref: '#/components/schemas/User'
-        parents:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              sha:
-                type: string
     Repository:
       type: object
       properties:
@@ -1053,19 +1023,32 @@ components:
               type: string
             html:
               type: string
-    Branch:
+    EditorConfigDefinition:
       type: object
       properties:
-        name:
+        charset:
+          type: string
+        indent_style:
+          type: string
+        indent_size:
+          type: string
+        end_of_line:
+          type: string
+    Commit:
+      type: object
+      properties:
+        url:
+          type: string
+        sha:
+          type: string
+        html_url:
           type: string
         commit:
           type: object
           properties:
-            id:
+            url:
               type: string
             message:
-              type: string
-            url:
               type: string
             author:
               type: object
@@ -1074,7 +1057,7 @@ components:
                   type: string
                 email:
                   type: string
-                username:
+                date:
                   type: string
             committer:
               type: object
@@ -1083,11 +1066,28 @@ components:
                   type: string
                 email:
                   type: string
-                username:
+                date:
                   type: string
-            timestamp:
-              type: string
-              format: date-time
+            tree:
+              type: object
+              properties:
+                url:
+                  type: string
+                sha:
+                  type: string
+        author:
+          $ref: '#/components/schemas/User'
+        committer:
+          $ref: '#/components/schemas/User'
+        parents:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              sha:
+                type: string
   securitySchemes:
     BasicAuth:
       type: http

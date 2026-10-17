@@ -486,23 +486,6 @@ components:
           type: boolean
         primary:
           type: boolean
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        login:
-          type: string
-          description: Alias of username for GitHub API compatibility
-        full_name:
-          type: string
-        email:
-          type: string
-          format: email
-        avatar_url:
-          type: string
     AccessToken:
       type: object
       properties:
@@ -524,6 +507,23 @@ components:
         created_at:
           type: string
           format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        login:
+          type: string
+          description: Alias of username for GitHub API compatibility
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar_url:
+          type: string
   securitySchemes:
     BasicAuth:
       type: http
