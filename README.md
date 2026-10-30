@@ -64,5 +64,115 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Gogs is a company surfaced via the API Evangelist harvest backlog (source: version-control) and added to the network as a stub for full-pipeline profiling.
-- https://gogs.io/
+Gogs is a painless self‑hosted Git service that lets you run your own Git server with a simple, lightweight web UI. It supports repository creation, issue tracking, pull requests, webhooks, and integrates with LDAP and OAuth providers. Gogs is written in Go, easy to install on Linux, macOS, and Windows, and is suitable for teams that need a fast, low‑maintenance version‑control platform they can host themselves.
+
+**Areas:** Company · Git · Self-Hosted · Open Source · Go · A2A
+
+## Gogs on APIs.io
+
+Everything profiled for Gogs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/gogs/](https://apis.io/providers/gogs/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Gogs API](https://apis.io/apis/gogs/gogs-api/) — RESTful API for interacting with Gogs instances, similar to GitHub REST API v3.
+- [Gogs Administration API](https://apis.io/apis/gogs/gogs-administration-api/) — Site administration endpoints (requires admin privileges)
+- [Gogs Collaborators and Deploy Keys API](https://apis.io/apis/gogs/gogs-collaborators-and-deploy-keys-api/) — Manage repository collaborators and deploy keys
+- [Gogs Issues API](https://apis.io/apis/gogs/gogs-issues-api/) — Manage issues, comments, labels, and milestones
+- [Gogs Miscellaneous API](https://apis.io/apis/gogs/gogs-miscellaneous-api/) — Markdown rendering and Git data endpoints
+- [Gogs Organizations API](https://apis.io/apis/gogs/gogs-organizations-api/) — Manage organizations, members, and teams
+- [Gogs Releases API](https://apis.io/apis/gogs/gogs-releases-api/) — List repository releases
+- [Gogs Repositories API](https://apis.io/apis/gogs/gogs-repositories-api/) — Create, search, and manage repositories, branches, commits, and contents
+- [Gogs Users API](https://apis.io/apis/gogs/gogs-users-api/) — Search users, manage access tokens, emails, followers, and public keys
+- [Gogs Webhooks API](https://apis.io/apis/gogs/gogs-webhooks-api/) — Create, edit, and delete repository webhooks
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Gogs Agentic Access](https://apis.io/agentic-access/gogs/gogs-agentic-access/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Gogs Context](https://apis.io/jsonld/gogs/gogs-context/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Gogs API Rules](https://apis.io/rules/gogs/gogs-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Gogs Authentication](https://apis.io/security/gogs/gogs-authentication/)
+- [Gogs Domain Security](https://apis.io/security/gogs/gogs-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://gogs.io/)
+- [Documentation](https://gogs.io/llms.txt)
+- [Getting started](https://gogs.io/getting-started/introduction)
+- [API reference](https://gogs.io/api-reference/introduction)
+- [Support](https://gogs.io/advancing/authentication)
+
+## API Evangelist rating
+
+**Kin Score 33.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 50.1 |
+| Contract governance | 22.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 47.0 |
+| Access clarity | 0.0 |
+
+**Agent readiness 28.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | unknown |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | conformant |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/gogs/](https://apis.io/providers/gogs/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Gogs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/gogs/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
